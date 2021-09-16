@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import java.util.function.DoubleBinaryOperator
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -72,7 +73,13 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    while(flag)
+    {
+        if(10>n)
+    }
+    return 0
+}
 
 /**
  * Простая (2 балла)
