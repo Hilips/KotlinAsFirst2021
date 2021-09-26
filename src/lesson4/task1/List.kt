@@ -241,7 +241,35 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var romNumber = listOf<String>("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X")
+    fun convertRomNumber(num: Int): String {
+        if (num < 10) return romNumber.elementAt(num)
+        if (num >= 400) {
+            return if (num >= 900)
+                if (num >= 1000) "M" + convertRomNumber(num - 1000)
+                else "CM" + convertRomNumber(num - 900)
+            else
+                if (num >= 500) "D" + convertRomNumber(num - 500)
+                else "CD" + convertRomNumber(num - 400)
+
+        } else {
+            if (num >= 90) {
+                return if (num >= 100) "C" + convertRomNumber(num - 100)
+                else "XC" + convertRomNumber(num - 90)
+            } else {
+                if (num >= 40) {
+                    return if (num >= 50) "L" + convertRomNumber(num - 50)
+                    else "XL" + convertRomNumber(num - 40)
+                }
+                return "X" + convertRomNumber(num - 10)
+            }
+        }
+        return " "
+    }
+    return convertRomNumber(n)
+}
+
 
 /**
  * Очень сложная (7 баллов)
@@ -250,4 +278,62 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+
+    var exNum = listOf<String>(" ", "одинадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+    var esNum = listOf<String>("ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    var hrNum = listOf<String>(" ", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+    var stNum = listOf<String>(" ", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    var tsNum = listOf<String>(" ", "одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+
+    var tmp: Int = 0
+    var tmp1: Int = 0
+    var n1: Int = n
+    var n2: Int = n/1000
+    var str: String = ""
+    tmp=n
+    tmp1=n/1000
+
+    if(n > 999)
+    {
+        if(n2 > 100)
+        {
+            str += stNum.elementAt(tmp1/100) + " "
+            if(tmp1/10%10 == 1 && tmp1%10 != 0) str+=exNum.elementAt(tmp1%10) + " "
+            else if(tmp1/10%10 != 0 ) str+= hrNum.elementAt(tmp1/10%10) + " "
+            else if(tmp1%10 != 0) str+= tsNum.elementAt(tmp1%10) + " "
+            // else if(tmp/10%10 == 1 && tmp%10 == 0) str+="десять"
+        }
+        else if(n2 == 100) str+="сто"
+        if(n2 < 100)
+            if(n2 >= 20 && n2%10 == 0) str+= hrNum.elementAt(tmp1/10%10) + " "
+            else if (n2 >= 20 && n2%10 != 0) str+= hrNum.elementAt(tmp1/10%10) + " " + tsNum.elementAt(tmp1%10)
+            else if (n2 >= 10 && n2 <=19) str+= exNum.elementAt(tmp1/10%10) + " "
+            else str+= tsNum.elementAt(tmp1%10) + " "
+        if(n2%10 == 1 && n2%100 != 11) str+= "тысяча "
+        else if(n2%10 == 2 || n2%10 == 3 || n2%10 == 4) str+= "тысячи "
+        else if(n2%100 in 5..20 || n2%10 == 0) str+= "тысяч "
+    }
+    if(n>999){
+        tmp%=1000
+        n1%=1000
+    }
+    if(n1 <= 999)
+        if(n1 > 100)
+        {
+            str += stNum.elementAt(tmp/100) + " "
+            if(tmp/10%10 == 1 && tmp%10 != 0) str+=exNum.elementAt(tmp/10%10) + " "
+            else if(tmp/10%10 != 0 ) str+= hrNum.elementAt(tmp/10%10) + " "
+            if(tmp%10 != 0) str+= esNum.elementAt(tmp%10) + " "
+            // else if(tmp/10%10 == 1 && tmp%10 == 0) str+="десять"
+        }
+        else if(n1 == 100) str+="сто"
+    if(n1 < 100)
+        if(n1 >= 20 && n1%10 == 0) str+= hrNum.elementAt(tmp/10%10) + " "
+        else if (n1 >= 20 && n1%10 != 0) str+= hrNum.elementAt(tmp/10%10) + " " + esNum.elementAt(tmp%10)
+        else if (n1 >= 10 && n1 <=19) str+= exNum.elementAt(tmp%10)
+        else str+= esNum.elementAt(tmp%10) + " "
+
+    return str.lines().joinToString(transform = String::trim, separator = "\n")
+
+}

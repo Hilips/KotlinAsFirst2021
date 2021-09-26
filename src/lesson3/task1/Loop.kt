@@ -2,8 +2,10 @@
 
 package lesson3.task1
 
+import com.sun.org.apache.xpath.internal.operations.Bool
 import java.util.function.DoubleBinaryOperator
 import kotlin.math.sqrt
+import kotlin.math.pow
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -74,11 +76,23 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    while(flag)
-    {
-        if(10>n)
+
+    var flag: Boolean = true
+    var numInNumber: Int = 0
+    var number = n
+    while (flag) {
+
+        if (number > 9) {
+            number /= 10
+            numInNumber++
+        }
+        if (number <= 9) {
+            numInNumber++
+            flag = false
+        }
     }
-    return 0
+    return numInNumber
+
 }
 
 /**
@@ -87,21 +101,32 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    if (n == 1 || n == 2) return 1
+    else return fib(n - 1) + fib(n - 2)
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    for (i in 2..n)
+        if (n % i == 0) return i
+    return 0
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    for (i in n - 1 downTo 1 step 1)
+        if (n % i == 0) return i
+    return 0
+}
 
 /**
  * Простая (2 балла)
@@ -119,7 +144,26 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var num: Int = 0
+    var n: Int = x
+    var flag: Boolean = true
+    if (x == 1) return 0
+    while (flag) {
+
+        if (n % 2 == 0) {
+            n = n / 2
+            num++
+            if (n == 1) flag = false
+        } else {
+            n = 3 * n + 1
+            num++
+            if (n == 1) flag = false
+        }
+    }
+    return num
+
+}
 
 /**
  * Средняя (3 балла)
@@ -127,7 +171,22 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var numM: Int = m
+    var numN: Int = n
+    var k: Int = if (numM > numN) numM else numM
+    var flag: Boolean = true
+    while (flag) {
+        if (numM > numN) {
+            if (k % numM == 0 && k % numN == 0) flag = false
+            else k++
+        } else if (numM < numN) {
+            if (k % numM == 0 && k % numN == 0) flag = false
+            else k++
+        }
+    }
+    return k
+}
 
 /**
  * Средняя (3 балла)
@@ -136,7 +195,16 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    fun seach(m: Int, n: Int): Boolean {
+        for (i in 2..m)
+            if (m % i == 0 && n % i == 0)
+                return false
+        return true
+    }
+    if (n > m) return seach(m, n)
+    else return seach(n, m)
+}
 
 /**
  * Средняя (3 балла)
@@ -145,7 +213,38 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    /*  fun Int.pow(x: Int): Int = (2..x).fold(this) { r, _ -> r * this }
+    fun rev(n: Int, pos: Int){
+        var num: Int = n
+        var k: Int = pos
+        if(num<10) {
+
+            val ns = num*(10.pow(k))}
+        return ns
+    }
+
+    var flag: Boolean = true
+    var numInNumber: Int = 0
+    var number = n
+
+    while(flag)
+    {
+
+        if(number>9) {
+            number /= 10
+            numInNumber++
+        }
+        if(number<=9) {
+            numInNumber ++
+            flag = false
+        }
+    }
+    numInNumber
+    return 0
+*/
+    return 0
+}
 
 /**
  * Средняя (3 балла)
@@ -188,6 +287,8 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
+
+
 fun cos(x: Double, eps: Double): Double = TODO()
 
 /**
@@ -199,7 +300,43 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+
+    fun search(n: Int, pos: Int): Int {
+        var tempCounter: Int = 0
+        var tempNumber: Int = n * n
+        while (true) {
+            if (tempCounter == pos)
+                return tempNumber % 10
+            tempNumber /= 10
+            tempCounter++
+        }
+    }
+
+    var numberInNum: Int = 0
+    var counter: Int = 1
+    var temp: Int = 0
+    var flag: Boolean = true
+    var division: Boolean = true
+    while (flag) {
+        temp = counter
+        temp *= temp
+        while (division) {
+            if (temp >= 1) {
+                temp /= 10
+                numberInNum++
+            } else division = false
+        }
+        if (numberInNum >= n) {
+            return (search(counter, numberInNum - n))
+            flag = false
+        }
+        division = true
+        counter++
+    }
+    return 0
+}
+
 
 /**
  * Сложная (5 баллов)
@@ -210,4 +347,40 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+
+    fun search(n: Int, pos: Int): Int {
+        var tempCounter: Int = 0
+        var tempNumber: Int = n
+        while (true) {
+            if (tempCounter == pos)
+                return tempNumber % 10
+            tempNumber /= 10
+            tempCounter++
+        }
+    }
+
+    var numberInNum: Int = 0
+    var counter: Int = 1
+    var temp: Int = 0
+    var flag: Boolean = true
+    var division: Boolean = true
+    while (flag) {
+        temp = fib(counter)
+        while (division) {
+            if (temp >= 1) {
+                temp /= 10
+                numberInNum++
+            } else division = false
+        }
+        if (numberInNum >= n) {
+            return (search(fib(counter), numberInNum - n))
+            flag = false
+        }
+        division = true
+        counter++
+    }
+
+
+    return 0
+}
