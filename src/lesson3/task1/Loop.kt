@@ -2,8 +2,7 @@
 
 package lesson3.task1
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-import java.util.function.DoubleBinaryOperator
+
 import kotlin.math.sqrt
 import kotlin.math.pow
 
