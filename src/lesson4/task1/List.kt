@@ -279,7 +279,6 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-
     var exNum = listOf<String>(
         " ",
         "одинадцать",
@@ -330,8 +329,8 @@ fun russian(n: Int): String {
         if (n2 > 100) {
             str += stNum.elementAt(tmp1 / 100) + " "
             if (tmp1 / 10 % 10 == 1 && tmp1 % 10 != 0) str += exNum.elementAt(tmp1 % 10) + " "
-            else if (tmp1 / 10 % 10 != 0) str += hrNum.elementAt(tmp1 / 10 % 10) + " "
-            else if (tmp1 % 10 != 0) str += tsNum.elementAt(tmp1 % 10) + " "
+            else if (tmp1 / 10 % 10 != 0 ) str += hrNum.elementAt(tmp1 / 10 % 10) + " "
+            if (tmp1 % 10 != 0 && tmp1 / 10 % 10 != 1) str += tsNum.elementAt(tmp1 % 10) + " "
             // else if(tmp/10%10 == 1 && tmp%10 == 0) str+="десять"
         } else if (n2 == 100) str += "сто"
         if (n2 < 100)
@@ -341,7 +340,7 @@ fun russian(n: Int): String {
             else str += tsNum.elementAt(tmp1 % 10) + " "
         if (n2 % 10 == 1 && n2 % 100 != 11) str += "тысяча "
         else if (n2 % 10 == 2 || n2 % 10 == 3 || n2 % 10 == 4) str += "тысячи "
-        else if (n2 % 100 in 5..20 || n2 % 10 == 0) str += "тысяч "
+        else if (n2 % 100 in 5..20 || n2 % 10 != 0 || n2/100%10 != 0) str += "тысяч " // == na !=
     }
     if (n > 999) {
         tmp %= 1000
