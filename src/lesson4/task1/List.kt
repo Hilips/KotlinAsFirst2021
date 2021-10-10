@@ -280,7 +280,7 @@ fun roman(n: Int): String {
  */
 fun russian(n: Int): String {
     var exNum = listOf<String>(
-        " ",
+        "десять",
         "одинадцать",
         "двенадцать",
         "тринадцать",
@@ -329,36 +329,38 @@ fun russian(n: Int): String {
         if (n2 > 100) {
             str += stNum.elementAt(tmp1 / 100) + " "
             if (tmp1 / 10 % 10 == 1 && tmp1 % 10 != 0) str += exNum.elementAt(tmp1 % 10) + " "
-            else if (tmp1 / 10 % 10 != 0 ) str += hrNum.elementAt(tmp1 / 10 % 10) + " "
+            else if (tmp1 / 10 % 10 != 0) str += hrNum.elementAt(tmp1 / 10 % 10) + " "
             if (tmp1 % 10 != 0 && tmp1 / 10 % 10 != 1) str += tsNum.elementAt(tmp1 % 10) + " "
-            // else if(tmp/10%10 == 1 && tmp%10 == 0) str+="десять"
-        } else if (n2 == 100) str += "сто"
+
+        }
         if (n2 < 100)
             if (n2 >= 20 && n2 % 10 == 0) str += hrNum.elementAt(tmp1 / 10 % 10) + " "
             else if (n2 >= 20 && n2 % 10 != 0) str += hrNum.elementAt(tmp1 / 10 % 10) + " " + tsNum.elementAt(tmp1 % 10) + " "
             else if (n2 in 10..19) str += exNum.elementAt(tmp1 / 10 % 10) + " "
             else str += tsNum.elementAt(tmp1 % 10) + " "
+
+
         if (n2 % 10 == 1 && n2 % 100 != 11) str += "тысяча "
         else if (n2 % 10 == 2 || n2 % 10 == 3 || n2 % 10 == 4) str += "тысячи "
-        else if (n2 % 100 in 5..20 || n2 % 10 != 0 || n2/100%10 != 0) str += "тысяч " // == na !=
+        else if (n2 % 100 in 5..20 || n2 % 10 != 0 || n2 / 100 % 10 != 0) str += "тысяч " // == na !=
     }
     if (n > 999) {
         tmp %= 1000
         n1 %= 1000
     }
-    if (n1 <= 999)
+    if (n1 <= 999 && n1 != 0)
         if (n1 > 100) {
             str += stNum.elementAt(tmp / 100) + " "
-            if (tmp / 10 % 10 == 1 && tmp % 10 != 0) str += exNum.elementAt(tmp / 10 % 10) + " "
+            if (tmp / 10 % 10 == 1) str += exNum.elementAt(tmp % 10) + " "
             else if (tmp / 10 % 10 != 0) str += hrNum.elementAt(tmp / 10 % 10) + " "
-            if (tmp % 10 != 0) str += esNum.elementAt(tmp % 10) + " "
-            // else if(tmp/10%10 == 1 && tmp%10 == 0) str+="десять"
-        } else if (n1 == 100) str += "сто"
-    if (n1 < 100)
+            if (tmp % 10 != 0 && tmp / 10 % 10 != 1) str += esNum.elementAt(tmp % 10) + " "
+        }
+    if (n1 < 100 && n1 != 0)
         if (n1 >= 20 && n1 % 10 == 0) str += hrNum.elementAt(tmp / 10 % 10) + " "
         else if (n1 >= 20 && n1 % 10 != 0) str += hrNum.elementAt(tmp / 10 % 10) + " " + esNum.elementAt(tmp % 10)
-        else if (n1 in 10..19) str += exNum.elementAt(tmp % 10)
+        else if (n1 % 100 in 10..19) str += exNum.elementAt(tmp % 10)
         else str += esNum.elementAt(tmp % 10) + " "
+
 
     return str.lines().joinToString(transform = String::trim, separator = "\n")
 }

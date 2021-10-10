@@ -4,6 +4,7 @@ package lesson2.task1
 
 
 import lesson1.task1.discriminant
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -71,29 +72,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-
-
-    var f: Int = 0
-    var l: Int = 0
-    if(age > 99)
-        f = age/10%10
-    else
-        f = age/10
-    l = age%10
-    if(f == 1)
-        return("$age лет")
-    else if(age == 1)
-        return("1 год")
-    else if(f == 0 || f > 1 && f <= 9 && l > 1 && l <= 5)
-        return("$age года")
-    else if(f == 0 || f > 1 && f <= 9 && l == 1)
-        return("$age год")
-    else if(f == 0 || f > 1 && f <= 9 && l > 5 && l <= 9)
-        return("$age лет")
-    else return ("Не входит в диапазон")
-
+    if (age % 10 == 1 && age / 10 % 10 in 2..9) return "$age год"
+    else if (age % 10 in 2..4 && age / 10 % 10 != 1) return "$age года"
+    else if (age % 100 in 5..20 || age % 10 in 6..9) return "$age лет"
+    else if (age % 10 == 1) return "$age год"
+    return "non"
 }
-        /**
+
+/**
  * Простая (2 балла)
  *
  * Путник двигался t1 часов со скоростью v1 км/час, затем t2 часов — со скоростью v2 км/час
@@ -105,22 +91,19 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-            var way1: Double = t1*v1
-            var way2: Double = t2*v2
-            var way3: Double = t3*v3
-            var allWay: Double= (way1+way2+way3)/2
+    var way1: Double = t1 * v1
+    var way2: Double = t2 * v2
+    var way3: Double = t3 * v3
+    var allWay: Double = (way1 + way2 + way3) / 2
 
-            if( 0<allWay &&allWay<way1 ) {
-                return allWay/v1
-            }
-            else if(way1 <allWay &&allWay< way1+way2) {
-                return t1+(allWay-way1)/v2
-            }
-            else if(way1+ way2 <allWay && allWay< way1+way2+way3){
-                return t1+t2+(allWay -way1 - way2)/v3
-            }
-            else return 1.1
-        }
+    if (0 < allWay && allWay < way1) {
+        return allWay / v1
+    } else if (way1 < allWay && allWay < way1 + way2) {
+        return t1 + (allWay - way1) / v2
+    } else if (way1 + way2 < allWay && allWay < way1 + way2 + way3) {
+        return t1 + t2 + (allWay - way1 - way2) / v3
+    } else return 1.1
+}
 
 /**
  * Простая (2 балла)
@@ -136,23 +119,11 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-
-    var dangerRook1: Boolean = false
-    var dangerRook2: Boolean = false
-    for(i in 1..8) {
-        if (i == kingX && rookY1 == kingY) dangerRook1 = true
-        if (rookX1 == kingX && i == kingY) dangerRook1 = true
-        if (i == kingX && rookY2 == kingY) dangerRook2 = true
-        if (rookX2 == kingX && i == kingY) dangerRook2 = true
-    }
-    if(dangerRook1 == false && dangerRook2 == false)
-        return 0
-    else if(dangerRook1 == true && dangerRook2 == false)
-        return 1
-    else if(dangerRook2 == true && dangerRook1 == false )
-        return 2
-    if(dangerRook1 == true && dangerRook2 == true)
-        return 3
+    if (kingX == rookX1 || kingY == rookY1)
+        if (kingX == rookX2 || kingY == rookY2)
+            return 3
+        else return 1
+    if (kingX == rookX2 || kingY == rookY2) return 2
     else return 0
 }
 
@@ -172,26 +143,12 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int, // ладья
     bishopX: Int, bishopY: Int // слон
 ): Int {
-    var dangerBishop: Boolean = false
-    var dangerRook: Boolean = false
-    for(i in 1..8) {
-        if (i == kingX && rookY == kingY) dangerRook = true
-        if (rookX == kingX && i == kingY) dangerRook = true
-    }
-    for(i in 1..8) {
-        if (bishopX-i == kingX && bishopY+i == kingY) dangerBishop = true
-        if (bishopX+i == kingX && bishopY-i == kingY) dangerBishop = true
-        if (bishopX-i == kingX && bishopY-i == kingY) dangerBishop = true
-        if (bishopX+i == kingX && bishopY+i == kingY) dangerBishop = true
-    }
-    if(dangerBishop == false && dangerRook == false)
-        return 0
-    else if (dangerRook == true && dangerBishop == false)
-        return 1
-    else if (dangerBishop == true && dangerRook == false)
-        return 2
-    if(dangerBishop == true && dangerRook == true)
-        return 3
+
+    if (kingX == rookX || kingY == rookY)
+        if (abs(kingX - bishopX) == abs(kingY - bishopY))
+            return 3
+        else return 1
+    if (abs(kingX - bishopX) == abs(kingY - bishopY)) return 2
     else return 0
 }
 
@@ -206,21 +163,20 @@ fun rookOrBishopThreatens(
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
 
-    fun calculationTriangle(a: Double, b: Double, c: Double): Int{
-    if(a < b + c && b < a + c && c < b + a){
-        if(a.pow(2.0) ==  b.pow(2.0) + c.pow(2.0)) return 1
-        else if(a.pow(2.0) < b.pow(2.0) + c.pow(2.0)) return 0
-        else if(a.pow(2.0) > b.pow(2.0) + c.pow(2.0)) return 2
-        else return -1
+    fun calculationTriangle(a: Double, b: Double, c: Double): Int {
+        if (a < b + c && b < a + c && c < b + a) {
+            if (a.pow(2.0) == b.pow(2.0) + c.pow(2.0)) return 1
+            else if (a.pow(2.0) < b.pow(2.0) + c.pow(2.0)) return 0
+            else if (a.pow(2.0) > b.pow(2.0) + c.pow(2.0)) return 2
+            else return -1
+        } else return -1
     }
-        else return -1
-    }
-   if(a>b && a>c)
-       return calculationTriangle(a,b,c)
-    else if( b>a && b>c)
-       return calculationTriangle(b,a,c)
-    else if ( c>a && c>b)
-       return calculationTriangle(c,a,b)
+    if (a > b && a > c)
+        return calculationTriangle(a, b, c)
+    else if (b > a && b > c)
+        return calculationTriangle(b, a, c)
+    else if (c > a && c > b)
+        return calculationTriangle(c, a, b)
     return 0
 }
 
@@ -234,11 +190,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
 
-  if(b<c) return -1
-    else if(a>d) return -1
-    else if(c>a && d>b) return b-c
-    else if(a>c && b>d) return d-a
-    else if(c>a && b>d) return d-c
-    else if(a>c && d>b) return b-a
+    if (b < c) return -1
+    else if (a > d) return -1
+    else if (c > a && d > b) return b - c
+    else if (a > c && b > d) return d - a
+    else if (c > a && b > d) return d - c
+    else if (a > c && d > b) return b - a
+    else if (a == b && b == c && c == d) return 0
     else return -1
 }

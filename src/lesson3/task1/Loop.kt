@@ -3,6 +3,7 @@
 package lesson3.task1
 
 
+import kotlin.math.abs
 import kotlin.math.sqrt
 import kotlin.math.pow
 
@@ -78,7 +79,7 @@ fun digitNumber(n: Int): Int {
 
     var flag: Boolean = true
     var numInNumber: Int = 0
-    var number = n
+    var number = abs(n)
     while (flag) {
 
         if (number > 9) {
@@ -107,12 +108,12 @@ fun digitNumber(n: Int): Int {
  */
 // Решение на списках
 
-var fibRad = mutableListOf(0,1,1)
+var fibRad = mutableListOf(0, 1, 1)
 fun fib(n: Int): Int {
-    if(fibRad.elementAtOrNull(n) != null)
+    if (fibRad.elementAtOrNull(n) != null)
         return fibRad.elementAt(n)
     else
-        fibRad.add(fib(n-1) + fib(n-2))
+        fibRad.add(fib(n - 1) + fib(n - 2))
     return fibRad.get(n)
 
 }
