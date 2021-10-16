@@ -77,22 +77,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
 
-    var flag: Boolean = true
     var numInNumber: Int = 0
     var number = abs(n)
-    while (flag) {
-
-        if (number > 9) {
+    if (number == 0) numInNumber++
+    while (number > 0) {
+        if (number > 0) {
             number /= 10
             numInNumber++
         }
-        if (number <= 9) {
-            numInNumber++
-            flag = false
-        }
     }
     return numInNumber
-
 }
 
 /**
@@ -108,13 +102,13 @@ fun digitNumber(n: Int): Int {
  */
 // Решение на списках
 
-var fibRad = mutableListOf(0, 1, 1)
+val fibRad = mutableListOf(0, 1, 1)
 fun fib(n: Int): Int {
     if (fibRad.elementAtOrNull(n) != null)
         return fibRad.elementAt(n)
     else
         fibRad.add(fib(n - 1) + fib(n - 2))
-    return fibRad.get(n)
+    return fibRad[n]
 
 }
 
@@ -124,7 +118,7 @@ fun fib(n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (i in 2..n)
+    for (i in 2..n / 2 + 1)
         if (n % i == 0) return i
     return 0
 }
@@ -157,21 +151,15 @@ fun maxDivisor(n: Int): Int {
  * этого для какого-либо начального X > 0.
  */
 fun collatzSteps(x: Int): Int {
-    var num: Int = 0
-    var n: Int = x
-    var flag: Boolean = true
+    var num = 0
+    var n = x
     if (x == 1) return 0
-    while (flag) {
-
-        if (n % 2 == 0) {
-            n = n / 2
-            num++
-            if (n == 1) flag = false
-        } else {
+    while (n != 1) {
+        if (n % 2 == 0)
+            n /= 2
+        else
             n = 3 * n + 1
-            num++
-            if (n == 1) flag = false
-        }
+        num++
     }
     return num
 
@@ -184,10 +172,10 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var numM: Int = m
-    var numN: Int = n
+    var numM = m
+    var numN = n
     var k: Int = if (numM > numN) numM else numM
-    var flag: Boolean = true
+    var flag = true
     while (flag) {
         if (numM > numN) {
             if (k % numM == 0 && k % numN == 0) flag = false
@@ -214,8 +202,8 @@ fun isCoPrime(m: Int, n: Int): Boolean {
                 return false
         return true
     }
-    if (n > m) return seach(m, n)
-    else return seach(n, m)
+    return if (n > m) seach(m, n)
+    else seach(n, m)
 }
 
 /**
@@ -312,18 +300,19 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int {
-
-    fun search(n: Int, pos: Int): Int {
-        var tempCounter: Int = 0
-        var tempNumber: Int = n * n
-        while (true) {
-            if (tempCounter == pos)
-                return tempNumber % 10
-            tempNumber /= 10
-            tempCounter++
-        }
+// Функция для двух последних задач
+fun search(n: Int, pos: Int): Int {
+    var tempCounter: Int = 0
+    var tempNumber: Int = n
+    while (true) {
+        if (tempCounter == pos)
+            return tempNumber % 10
+        tempNumber /= 10
+        tempCounter++
     }
+}
+
+fun squareSequenceDigit(n: Int): Int {
 
     var numberInNum: Int = 0
     var counter: Int = 1
@@ -359,18 +348,8 @@ fun squareSequenceDigit(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int {
 
-    fun search(n: Int, pos: Int): Int {
-        var tempCounter: Int = 0
-        var tempNumber: Int = n
-        while (true) {
-            if (tempCounter == pos)
-                return tempNumber % 10
-            tempNumber /= 10
-            tempCounter++
-        }
-    }
+fun fibSequenceDigit(n: Int): Int {
 
     var numberInNum: Int = 0
     var counter: Int = 1

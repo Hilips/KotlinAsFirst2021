@@ -242,7 +242,7 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    var romNumber = listOf<String>("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X")
+    val romNumber = listOf("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X")
     fun convertRomNumber(num: Int): String {
         if (num < 10) return romNumber.elementAt(num)
         if (num >= 400) {
@@ -341,8 +341,8 @@ fun russian(n: Int): String {
 
 
         if (n2 % 10 == 1 && n2 % 100 != 11) str += "тысяча "
-        else if (n2 % 10 == 2 || n2 % 10 == 3 || n2 % 10 == 4) str += "тысячи "
         else if (n2 % 100 in 5..20 || n2 % 10 != 0 || n2 / 100 % 10 != 0) str += "тысяч " // == na !=
+        else if (n2 % 10 == 2 || n2 % 10 == 3 || n2 % 10 == 4) str += "тысячи "
     }
     if (n > 999) {
         tmp %= 1000
@@ -360,7 +360,6 @@ fun russian(n: Int): String {
         else if (n1 >= 20 && n1 % 10 != 0) str += hrNum.elementAt(tmp / 10 % 10) + " " + esNum.elementAt(tmp % 10)
         else if (n1 % 100 in 10..19) str += exNum.elementAt(tmp % 10)
         else str += esNum.elementAt(tmp % 10) + " "
-
 
     return str.lines().joinToString(transform = String::trim, separator = "\n")
 }

@@ -20,8 +20,8 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = number / 1000 + number / 100 % 10 ==
-        number / 10 % 10 + number % 10
+fun isNumberHappy(number: Int): Boolean =
+    number / 1000 + number / 100 % 10 == number / 10 % 10 + number % 10
 
 
 /**
@@ -46,11 +46,11 @@ fun daysInMonth(month: Int, year: Int): Int {
         if (year % 400 == 0) return 29
         return 28
     }
-    when (month) {
-        1, 3, 5, 7, 8, 10, 12 -> return 31
-        4, 6, 9, 11 -> return 30
-        2 -> return febr(year)
-        else -> return 0
+    return when (month) {
+        1, 3, 5, 7, 8, 10, 12 -> 31
+        4, 6, 9, 11 -> 30
+        2 -> febr(year)
+        else -> 0
     }
 }
 
@@ -64,11 +64,9 @@ fun daysInMonth(month: Int, year: Int): Int {
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean {
-    if (((x2 - x1).pow(2.0) + (y2 - y1).pow(2.0)).pow(1 / 2.0) + r1 <= r2) return true
-    return false
+): Boolean =
+    ((x2 - x1).pow(2.0) + (y2 - y1).pow(2.0)).pow(1 / 2.0) + r1 <= r2
 
-}
 
 /**
  * Средняя (3 балла)
@@ -79,12 +77,19 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    if (a <= r && b <= s) return true
-    else if (a <= s && b <= r) return true
-    else if (c <= r && b <= s) return true
-    else if (b <= r && c <= s) return true
-    else if (a <= r && c <= s) return true
-    else if (c <= r && a <= s) return true
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
+    a <= r && b <= s || a <= s && b <= r
+            || c <= r && b <= s || b <= r && c <= s
+            || a <= r && c <= s || c <= r && a <= s
+
+/*
+    if return (a <= r && b <= s)true
+    else if (a <= s && b <= r) true
+    else if (c <= r && b <= s) true
+    else if (b <= r && c <= s) true
+    else if (a <= r && c <= s) true
+    else if (c <= r && a <= s) true
     return false
-}
+
+    */
+
