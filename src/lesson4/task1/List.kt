@@ -281,7 +281,7 @@ fun roman(n: Int): String {
 fun russian(n: Int): String {
     var exNum = listOf<String>(
         "десять",
-        "одинадцать",
+        "одиннадцать",
         "двенадцать",
         "тринадцать",
         "четырнадцать",

@@ -77,14 +77,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
 
-    var numInNumber: Int = 0
+    var numInNumber = 0
     var number = abs(n)
     if (number == 0) numInNumber++
     while (number > 0) {
-        if (number > 0) {
-            number /= 10
-            numInNumber++
-        }
+        number /= 10
+        numInNumber++
     }
     return numInNumber
 }
@@ -174,7 +172,7 @@ fun collatzSteps(x: Int): Int {
 fun lcm(m: Int, n: Int): Int {
     var numM = m
     var numN = n
-    var k: Int = if (numM > numN) numM else numM
+    var k = if (numM > numN) numM else numM
     var flag = true
     while (flag) {
         if (numM > numN) {
@@ -302,8 +300,8 @@ fun cos(x: Double, eps: Double): Double = TODO()
  */
 // Функция для двух последних задач
 fun search(n: Int, pos: Int): Int {
-    var tempCounter: Int = 0
-    var tempNumber: Int = n
+    var tempCounter = 0
+    var tempNumber = n
     while (true) {
         if (tempCounter == pos)
             return tempNumber % 10
@@ -314,11 +312,11 @@ fun search(n: Int, pos: Int): Int {
 
 fun squareSequenceDigit(n: Int): Int {
 
-    var numberInNum: Int = 0
-    var counter: Int = 1
-    var temp: Int = 0
-    var flag: Boolean = true
-    var division: Boolean = true
+    var numberInNum = 0
+    var counter = 1
+    var temp = 0
+    var flag = true
+    var division = true
     while (flag) {
         temp = counter
         temp *= temp
@@ -358,6 +356,7 @@ fun fibSequenceDigit(n: Int): Int {
     var division: Boolean = true
     while (flag) {
         temp = fib(counter)
+        // numberInNum = digitNumber(temp)
         while (division) {
             if (temp >= 1) {
                 temp /= 10
