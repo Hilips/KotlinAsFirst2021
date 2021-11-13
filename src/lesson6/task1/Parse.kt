@@ -138,7 +138,44 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int { // Ремонтирую эту функцию
+    fun throwEx(): Int {
+        val e = IllegalArgumentException()
+        throw e
+    }
+
+    var flagDeg = true
+    var flagNum = true
+    var flagZn = true
+    var counter = 0
+    var splStr = expression.split(" ")
+
+    for (numOrCount in splStr) {
+        if (flagDeg)
+            if (numOrCount == "+" || numOrCount == "-")
+                return throwEx()
+            else {
+                if (numOrCount == "+")
+                    flagZn = true
+                else flagZn = false
+                flagNum = true
+                flagDeg = false
+            }
+
+        if (flagDeg)
+            if (!flagDeg) {
+                if (numOrCount == "+" || numOrCount == "-" || !flagNum)
+                    return throwEx()
+                if (flagZn) counter += numOrCount.toInt()
+                else counter -= numOrCount.toInt()
+                flagDeg = true
+                flagNum = false
+            }
+
+    }
+
+    return throwEx()
+}
 
 /**
  * Сложная (6 баллов)
@@ -149,7 +186,16 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var splStr = str.split(" ")
+    var counterWord = 0
+    var lastWord = ""
+    for (i in splStr.indices)
+        if (splStr[i] == splStr[i + 1])
+            return counterWord
+        else counterWord += splStr[i].length + 1
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
@@ -162,7 +208,21 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val splStr = description.trim().split("; ")
+    var maxName = ""
+    var maxCoast = 0.0
+
+    for (i in splStr.indices) {
+        val strWithInfUnit = splStr[i].split(" ")
+        if (strWithInfUnit.elementAtOrNull(1) == null) return ""
+        if (strWithInfUnit[1].toDouble() > maxCoast) {
+            maxCoast = strWithInfUnit[1].toDouble()
+            maxName = strWithInfUnit[0]
+        }
+    }
+    return maxName
+}
 
 /**
  * Сложная (6 баллов)

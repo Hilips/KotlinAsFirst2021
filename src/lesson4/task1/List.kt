@@ -341,8 +341,9 @@ fun russian(n: Int): String {
 
 
         if (n2 % 10 == 1 && n2 % 100 != 11) str += "тысяча "
-        else if (n2 % 100 in 5..20 || n2 % 10 != 0 || n2 / 100 % 10 != 0) str += "тысяч " // == na !=
         else if (n2 % 10 == 2 || n2 % 10 == 3 || n2 % 10 == 4) str += "тысячи "
+        else if (n2 % 100 in 5..20 || n2 % 10 != 0 || n2 / 100 % 10 != 0) str += "тысяч " // == na !=
+
     }
     if (n > 999) {
         tmp %= 1000
@@ -356,10 +357,10 @@ fun russian(n: Int): String {
             if (tmp % 10 != 0 && tmp / 10 % 10 != 1) str += esNum.elementAt(tmp % 10) + " "
         }
     if (n1 < 100 && n1 != 0)
-        if (n1 >= 20 && n1 % 10 == 0) str += hrNum.elementAt(tmp / 10 % 10) + " "
-        else if (n1 >= 20 && n1 % 10 != 0) str += hrNum.elementAt(tmp / 10 % 10) + " " + esNum.elementAt(tmp % 10)
-        else if (n1 % 100 in 10..19) str += exNum.elementAt(tmp % 10)
-        else str += esNum.elementAt(tmp % 10) + " "
+        str += if (n1 >= 20 && n1 % 10 == 0) hrNum.elementAt(tmp / 10 % 10) + " "
+        else if (n1 >= 20 && n1 % 10 != 0) hrNum.elementAt(tmp / 10 % 10) + " " + esNum.elementAt(tmp % 10)
+        else if (n1 % 100 in 10..19) exNum.elementAt(tmp % 10)
+        else esNum.elementAt(tmp % 10) + " "
 
     return str.lines().joinToString(transform = String::trim, separator = "\n")
 }
