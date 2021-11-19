@@ -188,10 +188,11 @@ fun plusMinus(expression: String): Int { // Ремонтирую эту функ
  */
 fun firstDuplicateIndex(str: String): Int {
     var splStr = str.split(" ")
+    if (splStr.size == 1) return -1
     var counterWord = 0
     var lastWord = ""
     for (i in splStr.indices)
-        if (splStr[i] == splStr[i + 1])
+        if (splStr[i].equals(splStr[i + 1], ignoreCase = true))
             return counterWord
         else counterWord += splStr[i].length + 1
     return -1
