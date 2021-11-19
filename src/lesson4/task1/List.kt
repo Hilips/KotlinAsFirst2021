@@ -334,15 +334,15 @@ fun russian(n: Int): String {
 
         }
         if (n2 < 100)
-            if (n2 >= 20 && n2 % 10 == 0) str += hrNum.elementAt(tmp1 / 10 % 10) + " "
-            else if (n2 >= 20 && n2 % 10 != 0) str += hrNum.elementAt(tmp1 / 10 % 10) + " " + tsNum.elementAt(tmp1 % 10) + " "
-            else if (n2 in 10..19) str += exNum.elementAt(tmp1 / 10 % 10) + " "
-            else str += tsNum.elementAt(tmp1 % 10) + " "
+            str += if (n2 >= 20 && n2 % 10 == 0) hrNum.elementAt(tmp1 / 10 % 10) + " "
+            else if (n2 >= 20 && n2 % 10 != 0) hrNum.elementAt(tmp1 / 10 % 10) + " " + tsNum.elementAt(tmp1 % 10) + " "
+            else if (n2 in 10..19) exNum.elementAt(tmp1 / 10 % 10) + " "
+            else tsNum.elementAt(tmp1 % 10) + " "
 
 
-        if (n2 % 10 == 1 && n2 % 100 != 11) str += "тысяча "
-        else if (n2 % 10 == 2 || n2 % 10 == 3 || n2 % 10 == 4) str += "тысячи "
-        else if (n2 % 100 in 5..20 || n2 % 10 != 0 || n2 / 100 % 10 != 0) str += "тысяч " // == na !=
+        str += if(n2%10 == 1 && n2 % 100 != 11 ) "тысяча "
+        else if (n2%10 in 2..4 && n2%100 !in 12..14 ) "тысячи "
+        else "тысяч "
 
     }
     if (n > 999) {

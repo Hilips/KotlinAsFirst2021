@@ -118,7 +118,7 @@ fun fib(n: Int): Int {
 fun minDivisor(n: Int): Int {
     for (i in 2..n / 2 + 1)
         if (n % i == 0) return i
-    return 0
+    return n
 }
 
 /**
@@ -129,7 +129,7 @@ fun minDivisor(n: Int): Int {
 fun maxDivisor(n: Int): Int {
     for (i in n - 1 downTo 1 step 1)
         if (n % i == 0) return i
-    return 0
+    return n
 }
 
 /**
@@ -170,20 +170,16 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var numM = m
-    var numN = n
-    var k = if (numM > numN) numM else numM
-    var flag = true
-    while (flag) {
-        if (numM > numN) {
-            if (k % numM == 0 && k % numN == 0) flag = false
-            else k++
-        } else if (numM < numN) {
-            if (k % numM == 0 && k % numN == 0) flag = false
-            else k++
-        }
+    var num1 = n
+    var num2 = m
+    var tmp = 1
+    var i = 1
+    while (i <= num1 && i <= num2) {
+        if (num1 % i == 0 && num2 % i == 0)
+            tmp = i
+        i++
     }
-    return k
+    return num1 * num2 / tmp
 }
 
 /**
@@ -195,7 +191,7 @@ fun lcm(m: Int, n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
     fun seach(m: Int, n: Int): Boolean {
-        for (i in 2..m)
+        for (i in 2..m / 2)
             if (m % i == 0 && n % i == 0)
                 return false
         return true
@@ -212,37 +208,17 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    /*  fun Int.pow(x: Int): Int = (2..x).fold(this) { r, _ -> r * this }
-    fun rev(n: Int, pos: Int){
-        var num: Int = n
-        var k: Int = pos
-        if(num<10) {
-
-            val ns = num*(10.pow(k))}
-        return ns
-    }
-
-    var flag: Boolean = true
-    var numInNumber: Int = 0
+    var revNum = 0
     var number = n
 
-    while(flag)
-    {
-
-        if(number>9) {
-            number /= 10
-            numInNumber++
-        }
-        if(number<=9) {
-            numInNumber ++
-            flag = false
-        }
+    while (number != 0) {
+        val oneDigit = number % 10
+        revNum = revNum * 10 + oneDigit
+        number /= 10
     }
-    numInNumber
-    return 0
-*/
-    return 0
+    return revNum
 }
+
 
 /**
  * Средняя (3 балла)
@@ -349,11 +325,11 @@ fun squareSequenceDigit(n: Int): Int {
 
 fun fibSequenceDigit(n: Int): Int {
 
-    var numberInNum: Int = 0
-    var counter: Int = 1
-    var temp: Int = 0
-    var flag: Boolean = true
-    var division: Boolean = true
+    var numberInNum = 0
+    var counter = 1
+    var temp = 0
+    var flag = true
+    var division = true
     while (flag) {
         temp = fib(counter)
         // numberInNum = digitNumber(temp)

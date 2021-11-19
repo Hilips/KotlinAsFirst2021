@@ -71,11 +71,10 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    return if (age % 10 == 1 && age % 100 != 11) "$age год"
+fun ageDescription(age: Int): String =
+    if (age % 10 == 1 && age % 100 != 11) "$age год"
     else if (age % 10 in 2..4 && age % 100 !in 12..14) "$age года"
     else "$age лет"
-}
 
 
 /**
@@ -119,11 +118,11 @@ fun whichRookThreatens(
     rookX2: Int, rookY2: Int
 ): Int {
     if (kingX == rookX1 || kingY == rookY1)
-        if (kingX == rookX2 || kingY == rookY2)
-            return 3
-        else return 1
-    if (kingX == rookX2 || kingY == rookY2) return 2
-    else return 0
+        return if (kingX == rookX2 || kingY == rookY2)
+            3
+        else 1
+    return if (kingX == rookX2 || kingY == rookY2) 2
+    else 0
 }
 
 
@@ -144,11 +143,11 @@ fun rookOrBishopThreatens(
 ): Int {
 
     if (kingX == rookX || kingY == rookY)
-        if (abs(kingX - bishopX) == abs(kingY - bishopY))
-            return 3
-        else return 1
-    if (abs(kingX - bishopX) == abs(kingY - bishopY)) return 2
-    else return 0
+        return if (abs(kingX - bishopX) == abs(kingY - bishopY))
+            3
+        else 1
+    return if (abs(kingX - bishopX) == abs(kingY - bishopY)) 2
+    else 0
 }
 
 
@@ -163,20 +162,21 @@ fun rookOrBishopThreatens(
 fun triangleKind(a: Double, b: Double, c: Double): Int {
 
     fun calculationTriangle(a: Double, b: Double, c: Double): Int {
-        if (a < b + c && b < a + c && c < b + a) {
-            if (a.pow(2.0) == b.pow(2.0) + c.pow(2.0)) return 1
-            else if (a.pow(2.0) < b.pow(2.0) + c.pow(2.0)) return 0
-            else if (a.pow(2.0) > b.pow(2.0) + c.pow(2.0)) return 2
-            else return -1
-        } else return -1
+        return if (a < b + c && b < a + c && c < b + a) {
+            if (a.pow(2.0) == b.pow(2.0) + c.pow(2.0)) 1
+            else if (a.pow(2.0) < b.pow(2.0) + c.pow(2.0)) 0
+            else if (a.pow(2.0) > b.pow(2.0) + c.pow(2.0)) 2
+            else -1
+        } else -1
     }
-    if (a > b && a > c)
-        return calculationTriangle(a, b, c)
+    return if (a > b && a > c)
+        calculationTriangle(a, b, c)
     else if (b > a && b > c)
-        return calculationTriangle(b, a, c)
+        calculationTriangle(b, a, c)
     else if (c > a && c > b)
-        return calculationTriangle(c, a, b)
-    return 0
+        calculationTriangle(c, a, b)
+    else 0
+
 }
 
 /**
@@ -187,16 +187,19 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
 
-    return if (b < c) -1
+    if (b < c) -1
     else if (a > d) -1
     else if (c > a && d > b) b - c
     else if (a > c && b > d) d - a
     else if (c > a && b > d) d - c
     else if (a > c && d > b) b - a
     else if (a == b && b == c && c == d) 0
-    else if (c == d && a <= c ) 0
+    else if (c == d && a <= c) 0
     else if (b == c) 0
+    else if (c <= b && d <= a) 0
     else -1
-}
+
+
+
