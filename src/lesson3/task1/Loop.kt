@@ -303,7 +303,7 @@ fun squareSequenceDigit(n: Int): Int {
             } else division = false
         }
         if (numberInNum >= n) {
-            return (search(counter, numberInNum - n))
+            return (search(counter*counter, numberInNum - n))
             flag = false
         }
         division = true

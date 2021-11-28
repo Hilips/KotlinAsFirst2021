@@ -155,9 +155,7 @@ fun plusMinus(expression: String): Int { // Ремонтирую эту функ
             if (numOrCount == "+" || numOrCount == "-")
                 return throwEx()
             else {
-                if (numOrCount == "+")
-                    flagZn = true
-                else flagZn = false
+                flagZn = numOrCount == "+"
                 flagNum = true
                 flagDeg = false
             }

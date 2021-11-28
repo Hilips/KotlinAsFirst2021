@@ -116,14 +116,13 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int {
+): Int =
     if (kingX == rookX1 || kingY == rookY1)
-        return if (kingX == rookX2 || kingY == rookY2)
+        if (kingX == rookX2 || kingY == rookY2)
             3
         else 1
-    return if (kingX == rookX2 || kingY == rookY2) 2
+    else if (kingX == rookX2 || kingY == rookY2) 2
     else 0
-}
 
 
 /**
@@ -140,15 +139,13 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int, // ладья
     bishopX: Int, bishopY: Int // слон
-): Int {
-
+): Int =
     if (kingX == rookX || kingY == rookY)
-        return if (abs(kingX - bishopX) == abs(kingY - bishopY))
+        if (abs(kingX - bishopX) == abs(kingY - bishopY))
             3
         else 1
-    return if (abs(kingX - bishopX) == abs(kingY - bishopY)) 2
+    else if (abs(kingX - bishopX) == abs(kingY - bishopY)) 2
     else 0
-}
 
 
 /**
@@ -159,17 +156,17 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
+fun calculationTriangle(a: Double, b: Double, c: Double): Int {
+    return if (a < b + c && b < a + c && c < b + a) {
+        if (a.pow(2.0) == b.pow(2.0) + c.pow(2.0)) 1
+        else if (a.pow(2.0) < b.pow(2.0) + c.pow(2.0)) 0
+        else if (a.pow(2.0) > b.pow(2.0) + c.pow(2.0)) 2
+        else -1
+    } else -1
+}
 
-    fun calculationTriangle(a: Double, b: Double, c: Double): Int {
-        return if (a < b + c && b < a + c && c < b + a) {
-            if (a.pow(2.0) == b.pow(2.0) + c.pow(2.0)) 1
-            else if (a.pow(2.0) < b.pow(2.0) + c.pow(2.0)) 0
-            else if (a.pow(2.0) > b.pow(2.0) + c.pow(2.0)) 2
-            else -1
-        } else -1
-    }
-    return if (a > b && a > c)
+fun triangleKind(a: Double, b: Double, c: Double): Int =
+    if (a > b && a > c)
         calculationTriangle(a, b, c)
     else if (b > a && b > c)
         calculationTriangle(b, a, c)
@@ -177,7 +174,6 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         calculationTriangle(c, a, b)
     else 0
 
-}
 
 /**
  * Средняя (3 балла)
